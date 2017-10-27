@@ -1,4 +1,5 @@
 require 'gmail'
+require 'pry'
 
 class GmailWrapper
     def initialize(username, pass)
@@ -8,11 +9,9 @@ class GmailWrapper
     def inbox
         @client.inbox
     end
+
+    def right_email?
+      inbox.find(:unread, subject: "feed").count > 0
+    end
 end
 
-USERNAME = "willowsfeeder@gmail.com"
-PASS = "cdkwuenubgemcwfv"
-
-gmail = GmailWrapper.new(USERNAME, PASS)
-
-puts "Inbox count: #{gmail.inbox.count}"
