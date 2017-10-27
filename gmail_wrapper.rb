@@ -1,5 +1,4 @@
 require 'gmail'
-require 'pry'
 
 class GmailWrapper
     def initialize(username, pass)
@@ -9,9 +8,17 @@ class GmailWrapper
     def inbox
         @client.inbox
     end
+    
+    def feed_emails
+      inbox.find(:unread, subject: "feed")
+    end
 
-    def right_email?
-      inbox.find(:unread, subject: "feed").count > 0
+    def unread_feed_email?
+      feed_emails.count > 0
+    end
+
+    def mark_feed_emails_as_read
+      feed_emails.each(:read!)
     end
 end
 
